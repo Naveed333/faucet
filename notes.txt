@@ -1,0 +1,4 @@
+
+
+web3.js : is a collection of libs that allow you to interact with a local
+or remote etherum node.
