@@ -11,3 +11,8 @@ contract Faucet {
 
     receive() external payable {}
 }
+
+// block info
+// Nounce - a hash that when combined with the minHash proofs that
+//  the block has gone through proof of work(POW)
+// 8 bytes => 64 bits
