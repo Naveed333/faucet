@@ -16,7 +16,15 @@ function App() {
 
   const reloadEffect = useCallback(() => reload(!shouldReload), [shouldReload]);
   const setAccountListener = (provider) => {
-    provider.on('accountsChanged', (accounts) => setAccount(accounts[0]));
+    provider.on('accountsChanged', (_) => window.location.reload());
+
+    // provider.jsonRpcConnection.events.on('notification', (payload) => {
+    //   const { method } = payload;
+
+    //   if (method === 'metamask_unlockStateChanged') {
+    //     setAccount(null);
+    //   }
+    // });
   };
   useEffect(() => {
     const loadProvider = async () => {
@@ -24,7 +32,6 @@ function App() {
       const contract = await loadContract('Faucet', provider);
       if (provider) {
         setAccountListener(provider);
-        // provider.request({ method: 'eth_requestAccounts' });
         setWeb3Api({
           web3: new Web3(provider),
           provider,
@@ -93,10 +100,10 @@ function App() {
           <div className='balance-view is-size-2 my-4'>
             Current Balance: <strong>{balance}</strong> ETH
           </div>
-          <button className='button is-link mr-2' onClick={addFunds}>
+          <button className='button is-link mr-2' disabled={!account} onClick={addFunds}>
             Donate 1eth
           </button>
-          <button className='button is-primary' onClick={withdraw}>
+          <button className='button is-primary' disabled={!account} onClick={withdraw}>
             Withdraw
           </button>
         </div>
